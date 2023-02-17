@@ -2,11 +2,20 @@
 import Form from '../components/Form.astro';
 import MainLayout from '../layouts/MainLayout.astro';
 import Todo from '../components/Todo.astro';
+import getTodos from '../api/fetchApi';
+
+const data = await getTodos();
 ---
 
 <MainLayout>
   <Form />
-  <Todo slot='todo'>
-    <h1>THIS IS A TODO</h1>
-  </Todo>
+  {
+    data
+      ? data.todos.map((todo) => (
+          <Todo slot='todo'>
+            <h1>{todo.todo}</h1>
+          </Todo>
+        ))
+      : null
+  }
 </MainLayout>
