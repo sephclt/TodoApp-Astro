@@ -1,0 +1,13 @@
+---
+import Wrapper from '../components/Wrapper.astro';
+import Container from '../components/Container.astro';
+---
+
+<div class='bg-base-100 relative flex justify-center items-start'>
+  <Wrapper>
+    <slot />
+    <Container>
+      <slot name='todo' />
+    </Container>
+  </Wrapper>
+</div>
