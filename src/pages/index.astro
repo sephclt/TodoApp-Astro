@@ -9,6 +9,7 @@ const data = await getTodos();
 
 <MainLayout>
   <Form />
+  <div id='newTodo'></div>
   {
     data
       ? data.todos.map((todo) => (

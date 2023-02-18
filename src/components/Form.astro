@@ -11,8 +11,9 @@
   <button class='btn btn-primary rounded-none'>Add Todo</button>
 </form>
 
-<script is:inline>
+<script>
   window.addEventListener('load', () => {
+    const newTodoDiv = document.querySelector<HTMLDivElement>('#newTodo');
     const textInput = document.querySelector<HTMLInputElement>('#textInput');
     const todoForm = document.querySelector('#todoForm');
     let inputValue;
@@ -21,6 +22,8 @@
       e.preventDefault();
 
       inputValue = textInput?.value;
+      newTodoDiv?.append(inputValue as string | Node);
+      console.log(inputValue);
     });
   });
 </script>
