@@ -12,18 +12,52 @@
 </form>
 
 <script>
+  type NewTodoType = {
+    id: number;
+    todo: string;
+    completed: boolean;
+    userId: number;
+  };
+
+  const getNewTodo = async (inputValue: string | undefined) => {
+    const res = await fetch('https://dummyjson.com/todos/add', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        todo: inputValue,
+        completed: false,
+        userId: 5,
+      }),
+    });
+
+    const newTodo: NewTodoType = await res.json();
+
+    return newTodo;
+  };
+
   window.addEventListener('load', () => {
+    const todosContainer = document.getElementById(
+      'todosContainer'
+    ) as HTMLDivElement;
     const newTodoDiv = document.querySelector<HTMLDivElement>('#newTodo');
     const textInput = document.querySelector<HTMLInputElement>('#textInput');
     const todoForm = document.querySelector('#todoForm');
-    let inputValue;
+    let inputValue: string | undefined = '';
 
-    todoForm?.addEventListener('submit', (e) => {
+    const NewTodos = (newTodo: NewTodoType) => {
+      return `
+        <div>${newTodo.todo}</div>
+      `;
+    };
+
+    todoForm?.addEventListener('submit', async (e) => {
       e.preventDefault();
 
       inputValue = textInput?.value;
-      newTodoDiv?.append(inputValue as string | Node);
-      console.log(inputValue);
+
+      const newTodo = await getNewTodo(inputValue);
+
+      todosContainer.innerHTML = NewTodos(newTodo);
     });
   });
 </script>
