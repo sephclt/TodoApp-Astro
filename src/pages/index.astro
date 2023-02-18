@@ -9,9 +9,6 @@ const data = await getTodos();
 
 <MainLayout>
   <Form />
-  <Todo slot='todo'>
-    <h1 id='newTodo'></h1>
-  </Todo>
   {
     data
       ? data.todos.map((todo) => (

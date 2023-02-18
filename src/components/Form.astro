@@ -39,14 +39,14 @@
     const todosContainer = document.getElementById(
       'todosContainer'
     ) as HTMLDivElement;
-    const newTodoDiv = document.querySelector<HTMLDivElement>('#newTodo');
     const textInput = document.querySelector<HTMLInputElement>('#textInput');
     const todoForm = document.querySelector('#todoForm');
     let inputValue: string | undefined = '';
+    let listOfNewTodos: string[] = [];
 
-    const NewTodos = (newTodo: NewTodoType) => {
+    const NewTodos = (listOfNewTodos: string[]) => {
       return `
-        <div>${newTodo.todo}</div>
+        ${listOfNewTodos.map((newTodo) => newTodo)}
       `;
     };
 
@@ -56,8 +56,12 @@
       inputValue = textInput?.value;
 
       const newTodo = await getNewTodo(inputValue);
+      const todoElement = document.createElement('div');
 
-      todosContainer.innerHTML = NewTodos(newTodo);
+      listOfNewTodos.push(newTodo.todo);
+
+      todoElement.append(NewTodos(listOfNewTodos));
+      todosContainer.appendChild(todoElement);
     });
   });
 </script>
